@@ -42,6 +42,6 @@ const styles = StyleSheet.create({
   lineThrough: {
     color: '#9e9e9e',
     textDecorationLine: 'line-through',
-  }, 
+  },
 });
 export default TodoItem;

@@ -17,6 +17,26 @@ function App() {
     {id: 2, text: '리액트 네이티브 기초 공부', done: false},
     {id: 3, text: '투두리스트 만들어보기', done: false},
   ]);
+  const onInsert = text => {
+    const nextId =
+      // 새로 등록할 항목의 id 구함
+      // 등록된 항목 중에서 가장 큰 id를 구하, 그 값에 1을 더함
+      // 만약 리스트가 비어있으면 1을 id로 사용
+      // todos 배열이 비어 있지 않으면, todos 배열에서 id의 최대값을 찾아 +1을 한다.
+      todos.length > 0 ? Math.max(...todos.map(todos => todos.id)) + 1 : 1;
+    const todo = {
+      id: nextId,
+      //text: text 같은 코드
+      // 파라미터로 받은 text를 그대로 쓰겠다는 의미
+      text,
+      done: false,
+    };
+    //todos에 todo 배열 집어넣음
+    setTodos(todos.concat(todo));
+  };
+  console.log('onInsert : ', onInsert);
+  console.log('text->value : ', todos.value);
+
 
   return (
     <SafeAreaProvider>
@@ -24,7 +44,7 @@ function App() {
         <View style={styles.container}>
           <DateHead date={today} />
           {todos.length === 0 ? <Empty /> : <TodoList todoing={todos} />}
-          <AddTodo />
+          <AddTodo onInsert={onInsert} />
         </View>
       </SafeAreaView>
     </SafeAreaProvider>
