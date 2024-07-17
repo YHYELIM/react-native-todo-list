@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {FlatList, View, Text, StyleSheet} from 'react-native';
 import TodoItem from './\bTodoItem';
-function TodoList({todoing}) {
+function TodoList({todoing, onToggle}) {
   //console.log('222', todoing);
   return (
     <FlatList
@@ -14,7 +14,12 @@ function TodoList({todoing}) {
       // item : todos 배열의 각 요소
       // 각 아이템의 text 화면에 표시
       renderItem={({item}) => (
-        <TodoItem id={item.id} text={item.text} done={item.done} />
+        <TodoItem
+          id={item.id}
+          text={item.text}
+          done={item.done}
+          onToggle={onToggle}
+        />
       )}
       keyExtractor={item => item.id.toString()}
     />

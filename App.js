@@ -34,16 +34,26 @@ function App() {
     //todos에 todo 배열 집어넣음
     setTodos(todos.concat(todo));
   };
-  console.log('onInsert : ', onInsert);
-  console.log('text->value : ', todos.value);
 
+  // todo.id 값이 함수의 파라미터로 받아온 id 값과 일치하면 done 값 반전
+  // 그렇지 않으면 기존 객체 그대로 유지
+  const onToggle = id => {
+    const nextTodo = todos.map(todo =>
+      todo.id === id ? {...todo, done: !todo.done} : todo,
+    );
+    setTodos(nextTodo);
+  };
 
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.block} edges={['bottom']}>
         <View style={styles.container}>
           <DateHead date={today} />
-          {todos.length === 0 ? <Empty /> : <TodoList todoing={todos} />}
+          {todos.length === 0 ? (
+            <Empty />
+          ) : (
+            <TodoList todoing={todos} onToggle={onToggle} />
+          )}
           <AddTodo onInsert={onInsert} />
         </View>
       </SafeAreaView>
