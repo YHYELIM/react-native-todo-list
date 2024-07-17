@@ -1,8 +1,28 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, TextInput, Image, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Image,
+  TouchableOpacity,
+  Platform,
+  TouchableNativeFeedback,
+  Keyboard,
+} from 'react-native';
 
 function AddTodo() {
   const [text, setText] = useState('');
+  const onPress = () => {
+    setText('');
+    Keyboard.dismiss(); // 버튼을 누르면 (onPress) 키보듣 닫힘
+  };
+  const button = (
+    <View style={styles.buttonStyle}>
+      <Image source={require('../assets/icons/add_white/add_white.png')} />
+    </View>
+  );
+
   return (
     <View style={styles.block}>
       <TextInput
@@ -14,13 +34,23 @@ function AddTodo() {
         // Text를 입력할 때마다 setText 호출
         // 호출될 때는 현재 TextInput 내용을 인자로 넣어서 호출
         onChangeText={setText}
+        //Enter를 눌렀을때 호출되는 함수
+        onSubmitEditing={onPress}
       />
-      {/* 버튼 눌렸을 때 효과 보여줌 */}
-      <TouchableOpacity activeOpacity={0.5}>
-      <View style={styles.buttonStyle}>
-        <Image source={require('../assets/icons/add_white/add_white.png')} />
-      </View>
-      </TouchableOpacity>
+      {Platform.select({
+        ios: (
+          <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
+            {button}
+          </TouchableOpacity>
+        ),
+        android: (
+          <View style={styles.circleWrapper}>
+            <TouchableNativeFeedback onPress={onPress}>
+              {button}
+            </TouchableNativeFeedback>
+          </View>
+        ),
+      })}
     </View>
   );
 }
@@ -49,3 +79,4 @@ const styles = StyleSheet.create({
   },
 });
 export default AddTodo;
+
