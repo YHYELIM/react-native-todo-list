@@ -44,6 +44,12 @@ function App() {
     setTodos(nextTodo);
   };
 
+  //항목 삭제 함수
+  const onRemove = id => {
+    const nextTodos = todos.filter(todo => todo.id !== id);
+    setTodos(nextTodos);
+  };
+
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.block} edges={['bottom']}>
@@ -52,7 +58,7 @@ function App() {
           {todos.length === 0 ? (
             <Empty />
           ) : (
-            <TodoList todoing={todos} onToggle={onToggle} />
+            <TodoList todoing={todos} onToggle={onToggle} onRemove={onRemove} />
           )}
           <AddTodo onInsert={onInsert} />
         </View>
