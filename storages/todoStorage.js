@@ -21,9 +21,8 @@ const todoStorage = {
       throw new Error('Failed to load todos');
     }
   },
-  async set() {
+  async set(data) {
     try {
-      // eslint-disable-next-line no-undef
       await AsyncStorage.setItem(key, JSON.stringify(data));
     } catch (e) {
       throw new Error('Failed to load todos');
